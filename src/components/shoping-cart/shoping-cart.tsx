@@ -118,6 +118,7 @@ export default function ShopingCart({
               cart?.setSuccessfulPurchase(true);
               setTimeout(function () {
                 setIsShopingCart(false)
+                cart?.setSuccessfulPurchase(false);
               }, 2000);
             }}
             variant="contained"
