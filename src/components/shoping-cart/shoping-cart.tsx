@@ -116,6 +116,9 @@ export default function ShopingCart({
             onClick={() => {
               cart?.setPurchases([]);
               cart?.setSuccessfulPurchase(true);
+              setTimeout(function () {
+                setIsShopingCart(false)
+              }, 2000);
             }}
             variant="contained"
             endIcon={<ShoppingBasketIcon />}
