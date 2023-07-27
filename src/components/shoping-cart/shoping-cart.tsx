@@ -7,6 +7,8 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 interface IShopingCart {
   isShopingCart: boolean;
@@ -19,14 +21,13 @@ export default function ShopingCart({
 }: IShopingCart) {
   const cart = useContext(CartData);
 
-  const totalSum =
-    Math.round(
-      cart?.purchases.reduce(
-        (accumulator: any, currentValue: any) =>
-          currentValue.product.price * currentValue.value + accumulator,
-        0
-      ) / 10
-    ) * 10;
+  const totalSum = Math.round(
+    cart?.purchases.reduce(
+      (accumulator: any, currentValue: any) =>
+        currentValue.product.price * currentValue.value + accumulator,
+      0
+    )
+  );
 
   return (
     <Box
@@ -112,6 +113,10 @@ export default function ShopingCart({
             Total sum: {totalSum} $
           </Typography>
           <Button
+            onClick={() => {
+              cart?.setPurchases([]);
+              cart?.setSuccessfulPurchase(true);
+            }}
             variant="contained"
             endIcon={<ShoppingBasketIcon />}
             sx={{ display: "flex", alignItems: "center" }}
@@ -139,7 +144,35 @@ export default function ShopingCart({
             padding: "20px 20px 16px",
           }}
         >
-          {cart?.purchases.length === 0 ? (
+          {cart?.successfulPurchase ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                marginTop: "100px",
+              }}
+            >
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                sx={{
+                  overflow: "hidden",
+                  maxHeight: "200px",
+                  height: "100%",
+                  whiteSpace: "nowrap",
+                  margin: "0px",
+                  fontSize: { xs: "20px", md: "22px" },
+                }}
+              >
+                Payment is successful
+              </Typography>
+
+              <ThumbUpIcon />
+            </Box>
+          ) : cart?.purchases.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -183,6 +216,44 @@ export default function ShopingCart({
                 />
               ))
           )}
+        </Box>
+        <Box
+          sx={{
+            maxWidth: {
+              xs: "260px",
+              sm: "360px",
+              md: "460px",
+            },
+            width: "100%",
+            margin: "0 auto",
+          }}
+        >
+          <Button
+            onClick={() => {
+              cart?.setPurchases([]);
+            }}
+            variant="contained"
+            endIcon={<DeleteForeverIcon />}
+            sx={{
+              display: cart?.purchases.length === 0 ? "none" : "flex",
+              alignItems: "center",
+              margin: "0 auto 40px auto",
+              width: "100%",
+            }}
+          >
+            <Typography
+              gutterBottom
+              sx={{
+                fontSize: {
+                  xs: "12px",
+                  md: "18px",
+                },
+                margin: "0px",
+              }}
+            >
+              Clear cart
+            </Typography>
+          </Button>
         </Box>
       </Box>
     </Box>

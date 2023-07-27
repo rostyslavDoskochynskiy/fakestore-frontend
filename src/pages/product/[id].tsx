@@ -159,7 +159,7 @@ export default function Page() {
                       marginTop: "5px",
                     }}
                   >
-                    Prise: {selectedProduct?.rating.count} $
+                    Price: {selectedProduct?.rating.count} $
                   </Typography>
                   <Box
                     onClick={() => addToCart()}

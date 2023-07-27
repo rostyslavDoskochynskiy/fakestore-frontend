@@ -11,14 +11,18 @@ interface ICartContext {
   addPurchasesValue: (product: IProduct) => void;
   subtractPurchasesValue: (id: number) => void;
   removePurchase: (id: number) => void;
+  successfulPurchase: boolean;
+  setSuccessfulPurchase: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CartData = createContext<ICartContext | null>(null);
 
 const CartContext = ({ children }: any) => {
   const [purchases, setPurchases] = useState<ICart[]>([]);
+  const [successfulPurchase, setSuccessfulPurchase] = useState<boolean>(false);
 
   const addPurchasesValue = (product: IProduct) => {
+    setSuccessfulPurchase(false);
     setPurchases((prev: any) => {
       if (prev?.find((obj: ICart) => obj?.product?.id === product.id)) {
         const changedCart = prev.map((arr: ICart) => {
@@ -63,6 +67,8 @@ const CartContext = ({ children }: any) => {
         addPurchasesValue,
         subtractPurchasesValue,
         removePurchase,
+        successfulPurchase,
+        setSuccessfulPurchase,
       }}
     >
       {children}

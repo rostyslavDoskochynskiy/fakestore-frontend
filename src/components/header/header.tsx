@@ -13,12 +13,21 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { CartData } from "../../../context/cart-context";
 
 const pages = ["home", "products"];
 
 const Header = ({ setIsShopingCart }: any) => {
+  const cart = React.useContext(CartData);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
+  );
+  const totalPurchases = Math.round(
+    cart?.purchases.reduce(
+      (accumulator: any, currentValue: any) =>
+        1 * currentValue.value + accumulator,
+      0
+    )
   );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -126,12 +135,36 @@ const Header = ({ setIsShopingCart }: any) => {
               </Link>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, position: "relative" }}>
             <IconButton
               onClick={() => setIsShopingCart(true)}
               aria-label="delete"
             >
               <ShoppingCartIcon sx={{ color: "#fff" }} />
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  background: "#fff",
+                  position: "absolute",
+                  right: "-3px",
+                  bottom: "-3px",
+                  opacity: totalPurchases === 0 ? "0" : "1",
+                }}
+              >
+                <Typography
+                  sx={{
+                    margin: "0px",
+                    fontSize: "14px",
+                  }}
+                >
+                  {totalPurchases}
+                </Typography>
+              </Box>
             </IconButton>
           </Box>
         </Toolbar>
