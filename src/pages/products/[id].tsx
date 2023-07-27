@@ -49,10 +49,10 @@ export default function Page() {
             sm: "100px  auto 0 auto",
             md: "150px  auto 0 auto",
           },
-          minHeight: "63vh",
           position: "relative",
           padding: "0 16px",
         }}
+        style={{minHeight:'calc(100vh - 265px)'}}
       >
         {productsContext?.isLoading ? (
           <Box

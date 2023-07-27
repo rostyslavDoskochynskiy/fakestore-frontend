@@ -21,7 +21,7 @@ export default function ProductTile({ product }: IProductTile) {
 
   return (
     <Card sx={{ width: 280 }}>
-      <Link href={`product/${product.id}`}>
+      <Link href={`products/${product.id}`}>
         <CardMedia
           component="img"
           alt={product?.title}
